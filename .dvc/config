@@ -2,7 +2,7 @@
     remote = myremote
     autostage = true
 ['remote "myremote"']
-    url = https://dagshub.com/chemvape/examen-dvc
+    url = https://dagshub.com/chemvape/examen-dvc.dvc
 ['remote "origin"']
     url = s3://dvc
     endpointurl = https://dagshub.com/chemvape/examen-dvc.s3
