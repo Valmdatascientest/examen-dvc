@@ -14,8 +14,8 @@ def train_model(X_train_path, y_train_path, params_path):
     with open(params_path, 'rb') as file:
         params = pickle.load(file)
 
-    # Filtrer les paramètres pour ne garder que ceux compatibles avec RandomForestRegressor
-    valid_params = {k: v for k, v in params.items() if k in ['n_estimators', 'max_depth', 'min_samples_split', 'min_samples_leaf']}
+    # Convertir les paramètres en types natifs Python
+    valid_params = {k: int(v) if isinstance(v, np.int64) else v for k, v in params.items() if k in ['n_estimators', 'max_depth', 'min_samples_split', 'min_samples_leaf']}
 
     # Créer et entraîner le modèle
     model = RandomForestRegressor(**valid_params)
@@ -26,4 +26,5 @@ def train_model(X_train_path, y_train_path, params_path):
         pickle.dump(model, file)
 
 if __name__ == "__main__":
+    import numpy as np
     train_model('data/processed_data/X_train_scaled.csv', 'data/processed_data/y_train.csv', 'models/best_params.pkl')
