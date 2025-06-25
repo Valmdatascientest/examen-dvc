@@ -1,18 +1,31 @@
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.model_selection import GridSearchCV
 import pandas as pd
-import joblib
+import numpy as np
+from sklearn.model_selection import GridSearchCV
+from sklearn.ensemble import GradientBoostingRegressor
 
-def grid_search(X_train_path, y_train_path):
-    X_train = pd.read_csv(X_train_path)
-    y_train = pd.read_csv(y_train_path)
-    param_grid = {
-        'n_estimators': [100, 200],
-        'max_depth': [None, 10, 20],
-    }
-    grid_search = GridSearchCV(estimator=RandomForestRegressor(), param_grid=param_grid, cv=3)
-    grid_search.fit(X_train, y_train)
-    joblib.dump(grid_search.best_params_, 'models/best_params.pkl')
+# Charger les données
+X_train = pd.read_csv('data/processed/X_train_scaled.csv')
+y_train = pd.read_csv('data/processed/y_train.csv')
 
-if __name__ == "__main__":
-    grid_search('data/processed_data/X_train_scaled.csv', 'data/processed_data/y_train.csv')
+# Assurez-vous que y_train est un tableau 1D
+y_train = y_train.values.ravel()
+
+# Définir le modèle
+model = GradientBoostingRegressor()
+
+# Définir la grille de paramètres
+param_grid = {
+    'n_estimators': [50, 100, 200],
+    'learning_rate': [0.01, 0.05, 0.1],
+    'max_depth': [3, 4, 5]
+}
+
+# Configurer GridSearchCV
+grid_search = GridSearchCV(estimator=model, param_grid=param_grid, cv=5, scoring='neg_mean_squared_error')
+
+# Effectuer la recherche sur grille
+grid_search.fit(X_train, y_train)
+
+# Sauvegarder les meilleurs paramètres
+best_params = grid_search.best_params_
+pd.DataFrame([best_params]).to_pickle('models/best_params.pkl')
