@@ -19,14 +19,16 @@ def train_model(X_train_path, y_train_path, params_path):
     valid_params = {}
     for key, value in params.items():
         if key in ['n_estimators', 'max_depth', 'min_samples_split', 'min_samples_leaf']:
-            if isinstance(value, np.int64):
-                valid_params[key] = int(value)
-            else:
-                valid_params[key] = value
+            if isinstance(value, (np.int64, pd.Series)):
+                # Extraire la première valeur si c'est une série
+                value = value.iloc[0] if isinstance(value, pd.Series) else int(value)
+            valid_params[key] = value
 
     # Vérifier que max_depth est valide
-    if 'max_depth' in valid_params and valid_params['max_depth'] < 1:
-        valid_params['max_depth'] = None
+    if 'max_depth' in valid_params:
+        max_depth = valid_params['max_depth']
+        if isinstance(max_depth, int) and max_depth < 1:
+            valid_params['max_depth'] = None
 
     # Créer et entraîner le modèle
     model = RandomForestRegressor(**valid_params)
