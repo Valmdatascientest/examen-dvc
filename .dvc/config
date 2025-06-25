@@ -1,9 +1,9 @@
 [core]
     autostage = true
     no_scm = false
-    remote = myremote
+    remote = origin
+['remote "myremote"']
+    url = ../dvc_remote
 ['remote "origin"']
     url = s3://dvc
     endpointurl = https://dagshub.com/chemvape/examen-dvc.s3
-['remote "myremote"']
-    url = https://dagshub.com/chemvape/examen-dvc.s3
