@@ -4,8 +4,8 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.ensemble import GradientBoostingRegressor
 
 # Charger les données
-X_train = pd.read_csv('data/processed/X_train_scaled.csv')
-y_train = pd.read_csv('data/processed/y_train.csv')
+X_train = pd.read_csv('data/processed_data/X_train_scaled.csv')
+y_train = pd.read_csv('data/processed_data/y_train.csv')
 
 # Assurez-vous que y_train est un tableau 1D
 y_train = y_train.values.ravel()

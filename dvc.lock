@@ -69,13 +69,13 @@ stages:
       size: 26009
     - path: src/models/grid_search.py
       hash: md5
-      md5: 7916ef4043d172c2ac6e74e503ba514f
-      size: 680
+      md5: f414fbc96a9c58fa34c634c56dfc563a
+      size: 931
     outs:
     - path: models/best_params.pkl
       hash: md5
-      md5: a3dfde2636597eb4b31ced57fe220cfb
-      size: 47
+      md5: 9161f4bd336f2aebd01efd7e991df730
+      size: 832
   train_model:
     cmd: python src/models/train_model.py
     deps:
